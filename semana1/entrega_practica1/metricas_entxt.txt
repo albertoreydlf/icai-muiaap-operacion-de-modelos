@@ -1,0 +1,10 @@
+alias: "danko2002"
+experiment_name: "semana01-tracking"
+batch_id: "s01-a02be2b4"
+best_run_id: "38a50a6cf0284a7b92e53169247fa3a2"
+ganador: "random_forest_small"
+metrica_para_elegir: "validation.f1_macro"
+validation_f1_macro: 1.0
+test_accuracy: 1.0
+test_f1_macro: 1.0
+capturas: smoke_test.png, runs.png
