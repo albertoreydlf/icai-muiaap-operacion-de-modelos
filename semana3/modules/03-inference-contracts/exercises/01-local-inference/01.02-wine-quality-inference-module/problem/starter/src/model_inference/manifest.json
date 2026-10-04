@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "model_version": "1.0.0",
+  "preprocessing_version": "v1",
+  "feature_names": [
+    "fixed acidity",
+    "volatile acidity",
+    "citric acid",
+    "residual sugar",
+    "chlorides",
+    "free sulfur dioxide",
+    "total sulfur dioxide",
+    "density",
+    "pH",
+    "sulphates",
+    "alcohol"
+  ],
+  "output_labels": ["acceptable","excellent","needs_review"],
+  "estimator_type": "RandomForestClassifier"
+}
