@@ -45,18 +45,62 @@ def collect_values(st: Any) -> tuple[bool, dict[str, float]]:
     Cada ``number_input`` debe recibir label, rango, default, step y una key
     estable. Devuelve ``(submitted, values)`` sin llamar al gateway.
     """
+    # cada campo tiene la forma:
+    #  FieldSpec(
+    #       name="fixed_acidity",
+    #       label="Acidez fija",
+    #       min_value=0.0,
+    #       max_value=20.0,
+    #       default=7.4,
+    #       step=0.1,
+    #   ),
+    # FieldSpec(
+    #        name="volatile_acidity",
+    #        label="Acidez volátil",
+    #        min_value=0.0,
+    #        max_value=2.0,
+    #        default=0.7,
+    #        step=0.01,
+    #    ),...
 
-    raise NotImplementedError(
-        f"TODO: renderiza los {len(FIELD_SPECS)} campos de FIELD_SPECS"
-    )
+    valores = {}
+    with st.form("wine_quality_form"):
+        for campo in FIELD_SPECS:  # una vuelta por cada campo
+            valores[campo.name] = st.number_input(  # Casilla y guardo su valor
+                campo.label,  # Texto que se ve encima
+                min_value=campo.min_value,  # el minimo
+                max_value=campo.max_value,  # el maximo
+                value=campo.default,  # lo que sale al abrir la app
+                step=campo.step,  # Cuánto sube con el + y el -
+                key=f"input_{campo.name}",  # nombre interno de cada casilla,la clave
+                # por la q se reconce
+            )
+        enviado = st.form_submit_button("Ejecutar inferencia")  # True si lo pulsan
+    return enviado, valores  # devuelvo si pulsó y los 11 valores
 
 
 def render_prediction(st: Any, prediction: PredictionPayload) -> None:
     """TODO: presenta los cuatro campos de ``PredictionPayload``."""
-
-    raise NotImplementedError(
-        "TODO: presenta quality_band, confidence y las dos versiones"
-    )
+    # prediction tiene esta forma,es un objeto al que accedemos con prediction.loqsea
+    # class PredictionPayload(BaseModel):
+    # """Respuesta validada que llega desde el gateway."""
+    #
+    # model_config = ConfigDict(extra="forbid")
+    #
+    # quality_band: QualityBand
+    # confidence: FiniteFloat = Field(ge=0, le=1)
+    # model_version: str = Field(min_length=1)
+    # preprocessing_version: str = Field(min_length=1)
+    st.info("Resultado del modelo")  # un aviso azul de título
+    st.caption(f"quality_band: {prediction.quality_band}")  # la calidad
+    st.caption(
+        f"confidence: {prediction.confidence:.2f}"
+    )  # La confianza con 2 decimales
+    st.caption(f"model_version: {prediction.model_version}")  # versión del modelo
+    st.caption(
+        f"preprocessing_version: {prediction.preprocessing_version}"
+    )  # Y del preproceso
+    # st.write es lo mismo que el st.caption pero sale la letra mas grande.
 
 
 def run_app(st: Any, gateway: InferenceGateway) -> None:

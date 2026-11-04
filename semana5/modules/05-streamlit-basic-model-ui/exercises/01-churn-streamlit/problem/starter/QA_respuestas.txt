@@ -1,0 +1,19 @@
+QA que pide el enunciado,aunque no hay mucho que escribir
+
+1. Arranque	Abrir la app.
+
+Al abrir la app despues de rellenar todos los TODO,ya sale bien y "bonito",aparecen título, explicación y un formulario con los
+ cuatro widgets.Se puede tocar todo de forma interactiva y no da errores ni salen fallos.
+
+2. Edición sin envío.Cambiar varios valores sin pulsar el botón.	
+No cambia nada al cambiar los valores.Cambiaria que al subir el contador de gasto esperado sube en centimos y 
+pondria que subiese en unidades que seria mas rapido.
+
+3. Submit válido.Pulsar Calcular riesgo con un perfil válido.	
+Cuando envias sale el resultado abajo y las etiquetas amarilla o verde segun lo que hayas puesto como valores
+Aparecen la etiqueta, el score y la explicación del modelo.
+
+
+4. Resultado actualizado.Cambiar el perfil y volver a enviar.	
+
+Cuando cambias los parametros la respuesta cambia segun los valores que le hayas dado,no se queda igual.
