@@ -7,7 +7,8 @@ st.caption("Regla de juguete. No usar para tomar decisiones sobre clientes.")
 
 # A: iniciar una sola vez, no en cada rerun.
 if "history" not in st.session_state:
-    pass  # TODO A: asignar [] a st.session_state.history
+    st.session_state.history = []
+   
 
 def submit_prediction():
     # Leer los valores nuevos desde las keys, no mediante args del callback.
@@ -15,7 +16,8 @@ def submit_prediction():
               ("tenure_months", "monthly_spend_eur", "contract", "support_calls")}
     result = predict_toy(**inputs)
     # B: una fila por submit. No predecir en cada rerun.
-    pass  # TODO B: añadir {**inputs, **result} a history
+    st.session_state.history.append({**inputs, **result})
+      
 
 def clear_history():
     st.session_state.history = []
@@ -35,6 +37,12 @@ if st.session_state.show_help:
 
 # C: mostrar un contador y, si hay filas, st.dataframe.
 # Pista: history = st.session_state.get("history", [])
-st.info("TODO C: dibuja aquí el historial y su contador.")
+history = st.session_state.get("history", [])
+st.metric("Numero de predicciones guardadas", len(history))
+if history and len(history)  > 0:
+    st.dataframe(history)
+
+
+
 st.button("Vaciar historial", on_click=clear_history)
 st.caption("Recargar el navegador o cerrar la conexión puede borrar la sesión. No es una base de datos.")
