@@ -25,7 +25,7 @@ def decidir(probabilidad : float) -> str:
     elif probabilidad < 0.5:
         return decisiones[1]
     
-    elif probabilidad > 0.5:
+    else:
         return decisiones[2]
         
 
