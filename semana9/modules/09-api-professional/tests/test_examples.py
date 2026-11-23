@@ -91,4 +91,11 @@ def test_openapi_documents_errors_and_examples() -> None:
     error_ref = operation["responses"]["422"]["content"]["application/json"]
     assert error_ref["schema"]["$ref"].endswith("ErrorResponse")
     examples = operation["requestBody"]["content"]["application/json"]["examples"]
-    assert set(examples) == {"valid", "minor"}
+    assert set(examples) == {"valid", "minor", "no_income"}
+
+
+def test_income_cero_se_rechaza(errors_client: TestClient) -> None:
+    response = errors_client.post("/v1/scores", json={"age": 30, "income": 0})
+
+    assert response.status_code == 422  # income 0 no cumple el gt=0
+    assert response.json()["error"]["fields"][0]["field"] == "income"  # el campo
